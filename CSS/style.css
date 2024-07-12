@@ -58,6 +58,20 @@ nav i, nav .links p{
     background-color: #0D0D0D;
     color: #f9f6f6;
 }
+.ingredients .painted{
+  color: #055160;
+  background-color: #cff4fc;
+  padding: 5px;
+}
+.types span{
+  color: #842029;
+  background-color: #f8d7da;
+  padding: 5px;
+}
+h2 i{
+  font-size: 19px;
+  cursor: pointer;
+}
 .loader {
     color: #fff;
     font-size: 10px;
