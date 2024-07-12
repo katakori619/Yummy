@@ -49,9 +49,13 @@ $('.navcloseopen').on('click',function(){
     }
 })
 async function getdetailsMeals(id){
+    document.querySelector('.website').classList.add('d-none')
+    document.querySelector('.loading').classList.remove('d-none')
     let meals = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
     let mealsjson = await meals.json()
     displayDetails(mealsjson.meals[0])
+    document.querySelector('.website').classList.remove('d-none')
+    document.querySelector('.loading').classList.add('d-none')
 }
 
 function displayDetails(api){
@@ -105,7 +109,72 @@ function setdetails() {
     });
 }
 $(document).on('click','.closedetails',function(){
-    console.log("done");
     document.querySelector('.mealsDetails').classList.add('d-none');
     document.querySelector('.meals').classList.remove('d-none');
+})
+async function getcategories(){
+    document.querySelector('.besidenav').classList.add('d-none')
+    document.querySelector('.loading').classList.remove('d-none')
+    let cat = await fetch('https://www.themealdb.com/api/json/v1/1/categories.php')
+    let catjson = await cat.json()
+    displaycategories(catjson.categories)
+    document.querySelector('.besidenav').classList.remove('d-none')
+    document.querySelector('.loading').classList.add('d-none')
+}
+function displaycategories(api){
+    let cartona3 = ``
+    for(var x = 0;x<api.length;x++){
+        cartona3 += `
+        <div class="col-md-3" id="${api[x].strCategory}">
+                            <div class="image rounded-2">
+                                <img src="${api[x].strCategoryThumb}" class="100" alt="">
+                                <div class="layer rounded-2 p-2 text-center">
+                                    <h3>${api[x].strCategory}</h3>
+                                    <p>${api[x].strCategoryDescription}</p></div>
+                            </div>
+                        </div>
+        `
+    }
+    document.getElementById('categories').innerHTML = cartona3
+}
+$(document).on('click','.links p.two',function(){
+    $('nav').animate({'left':'-260px'},400)
+    $('.links p').animate({'top':'300px'},400)
+    document.querySelector('.navbarlinks').classList.remove('clicked')
+    document.querySelector('.navcloseopen').classList.add('fa-align-justify')
+    document.querySelector('.navcloseopen').classList.remove('fa-x')
+    document.querySelector('.meals').classList.add('d-none');
+    document.querySelector('.mealcategories').classList.remove('d-none');
+    getcategories()
+})
+async function getcategorymeal(mealtitle){
+    let meal = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${mealtitle}`)
+    let mealjson = await meal.json()
+    console.log(mealjson.meals)
+    displaycategorymeals(mealjson.meals)
+}
+function displaycategorymeals(api){
+    var cartona4 = ``
+    for(var i = 0;i<api.length;i++){
+        cartona4 +=`
+        <div class="col-md-3" id="${api[i].idMeal}">
+                            <div class="image rounded-2">
+                                <img src="${api[i].strMealThumb}" class="w-100" alt="">
+                                <div class="layer rounded-2 d-flex justify-content-center align-items-center">${api[i].strMeal}</div>
+                            </div>
+                    </div>
+        `
+    }
+    document.getElementById('categmeals').innerHTML = cartona4
+}
+$(document).on('click','.mealcategories .col-md-3',async function(){
+    await getcategorymeal(this.id)
+    console.log(this.id)
+    document.querySelector('.mealcategories').classList.add('d-none')
+    document.querySelector('.catmeals').classList.remove('d-none')
+    $('#categmeals').on('click', '.col-md-3', async function () {
+        await getdetailsMeals(this.id);
+        document.querySelector('.catmeals').classList.add('d-none');
+        document.querySelector('.mealsDetails').classList.remove('d-none');
+    });
 })

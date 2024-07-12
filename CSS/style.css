@@ -39,6 +39,9 @@ nav i, nav .links p{
     overflow: hidden;
     cursor: pointer;
 }
+.mealcategories .container .row .image .layer p{
+  font-size: 13px;
+}
 .col-md-3 .layer{
     position: absolute;
     background-color: #f9f6f6ca;
