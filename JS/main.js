@@ -116,6 +116,8 @@ $(document).on('click', '.closedetails', function () {
         document.querySelector('.meals').classList.remove('d-none');
     } else if (currentView === 'category') {
         document.querySelector('.catmeals').classList.remove('d-none');
+    } else if(currentView ==='area'){
+        document.querySelector('.areasmeals').classList.remove('d-none')
     }
 });
 async function getcategories(){
@@ -146,6 +148,8 @@ function displaycategories(api){
 $(document).on('click','.links p.two',function(){
     document.querySelector('.mealsDetails').classList.add('d-none')
     document.querySelector('.catmeals').classList.add('d-none')
+    document.querySelector('.areasmeals').classList.add('d-none')
+    document.querySelector('.areas').classList.add('d-none')
     $('nav').animate({'left':'-260px'},400)
     $('.links p').animate({'top':'300px'},400)
     document.querySelector('.navbarlinks').classList.remove('clicked')
@@ -188,6 +192,76 @@ $(document).on('click','.mealcategories .col-md-3',async function(){
     $('#categmeals').on('click', '.col-md-3', async function () {
         await getdetailsMeals(this.id);
         document.querySelector('.catmeals').classList.add('d-none');
+        document.querySelector('.mealsDetails').classList.remove('d-none');
+    });
+})
+async function getareas(){
+    document.querySelector('.besidenav').classList.add('d-none')
+    document.querySelector('.loading').classList.remove('d-none')
+    let cat = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?a=list')
+    let catjson = await cat.json()
+    displayareas(catjson.meals)
+    document.querySelector('.besidenav').classList.remove('d-none')
+    document.querySelector('.loading').classList.add('d-none')
+}
+function displayareas(api){
+    let cartona5 = ``
+    for(var x = 0;x<api.length;x++){
+        cartona5 += `
+        <div class="col-md-3 text-center" id="${api[x].strArea}">
+                                <i class="fa-solid fa-house-laptop fa-4x"></i>
+                                <h3>${api[x].strArea}</h3>
+                            </div>
+        `
+    }
+    document.getElementById('areas').innerHTML = cartona5
+}
+$(document).on('click','.links p.three',function(){
+    document.querySelector('.mealsDetails').classList.add('d-none')
+    document.querySelector('.catmeals').classList.add('d-none')
+    document.querySelector('.mealcategories').classList.add('d-none')
+    document.querySelector('.areasmeals').classList.add('d-none')
+    $('nav').animate({'left':'-260px'},400)
+    $('.links p').animate({'top':'300px'},400)
+    document.querySelector('.navbarlinks').classList.remove('clicked')
+    document.querySelector('.navcloseopen').classList.add('fa-align-justify')
+    document.querySelector('.navcloseopen').classList.remove('fa-x')
+    document.querySelector('.meals').classList.add('d-none');
+    document.querySelector('.areas').classList.remove('d-none');
+    getareas()
+})
+async function getareameal(mealarea){
+    document.querySelector('.besidenav').classList.add('d-none')
+    document.querySelector('.loading').classList.remove('d-none')
+    let meal = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=${mealarea}`)
+    let mealjson = await meal.json()
+    displayareameal(mealjson.meals)
+    document.querySelector('.besidenav').classList.remove('d-none')
+    document.querySelector('.loading').classList.add('d-none')
+}
+function displayareameal(api){
+    var cartona6 = ``
+    for(var i = 0;i<api.length;i++){
+        cartona6 +=`
+        <div class="col-md-3" id="${api[i].idMeal}">
+                            <div class="image rounded-2">
+                                <img src="${api[i].strMealThumb}" class="w-100" alt="">
+                                <div class="layer rounded-2 d-flex justify-content-center align-items-center">${api[i].strMeal}</div>
+                            </div>
+                    </div>
+        `
+    }
+    document.getElementById('areasmeals').innerHTML = cartona6
+}
+$(document).on('click','.areas .col-md-3',async function(){
+    document.querySelector('.mealsDetails').classList.add('d-none')
+    currentView = 'area';
+    await getareameal(this.id)
+    document.querySelector('.areas').classList.add('d-none')
+    document.querySelector('.areasmeals').classList.remove('d-none')
+    $('#areasmeals').on('click', '.col-md-3', async function () {
+        await getdetailsMeals(this.id);
+        document.querySelector('.areasmeals').classList.add('d-none');
         document.querySelector('.mealsDetails').classList.remove('d-none');
     });
 })

@@ -42,6 +42,9 @@ nav i, nav .links p{
 .mealcategories .container .row .image .layer p{
   font-size: 13px;
 }
+.areas .col-md-3{
+  cursor: pointer;
+}
 .col-md-3 .layer{
     position: absolute;
     background-color: #f9f6f6ca;
@@ -75,6 +78,7 @@ h2 i{
   font-size: 19px;
   cursor: pointer;
 }
+
 .loader {
     color: #fff;
     font-size: 10px;
