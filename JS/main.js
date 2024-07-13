@@ -1,5 +1,6 @@
 /// <reference types="../node_modules/@types/jquery" />
 var cartona = ``
+let currentView = 'random'
 async function getrandomMeals(){
     let meals = await fetch('https://www.themealdb.com/api/json/v1/1/random.php')
     let mealsjson = await meals.json()
@@ -103,15 +104,20 @@ function displayDetails(api){
 }
 function setdetails() {
     $('#meals').on('click', '.col-md-3', async function () {
+        console.log();
         await getdetailsMeals(this.id);
         document.querySelector('.meals').classList.add('d-none');
         document.querySelector('.mealsDetails').classList.remove('d-none');
     });
 }
-$(document).on('click','.closedetails',function(){
+$(document).on('click', '.closedetails', function () {
     document.querySelector('.mealsDetails').classList.add('d-none');
-    document.querySelector('.meals').classList.remove('d-none');
-})
+    if (currentView === 'random') {
+        document.querySelector('.meals').classList.remove('d-none');
+    } else if (currentView === 'category') {
+        document.querySelector('.catmeals').classList.remove('d-none');
+    }
+});
 async function getcategories(){
     document.querySelector('.besidenav').classList.add('d-none')
     document.querySelector('.loading').classList.remove('d-none')
@@ -138,6 +144,8 @@ function displaycategories(api){
     document.getElementById('categories').innerHTML = cartona3
 }
 $(document).on('click','.links p.two',function(){
+    document.querySelector('.mealsDetails').classList.add('d-none')
+    document.querySelector('.catmeals').classList.add('d-none')
     $('nav').animate({'left':'-260px'},400)
     $('.links p').animate({'top':'300px'},400)
     document.querySelector('.navbarlinks').classList.remove('clicked')
@@ -148,10 +156,14 @@ $(document).on('click','.links p.two',function(){
     getcategories()
 })
 async function getcategorymeal(mealtitle){
+    document.querySelector('.besidenav').classList.add('d-none')
+    document.querySelector('.loading').classList.remove('d-none')
     let meal = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${mealtitle}`)
     let mealjson = await meal.json()
     console.log(mealjson.meals)
     displaycategorymeals(mealjson.meals)
+    document.querySelector('.besidenav').classList.remove('d-none')
+    document.querySelector('.loading').classList.add('d-none')
 }
 function displaycategorymeals(api){
     var cartona4 = ``
@@ -168,8 +180,9 @@ function displaycategorymeals(api){
     document.getElementById('categmeals').innerHTML = cartona4
 }
 $(document).on('click','.mealcategories .col-md-3',async function(){
+    document.querySelector('.mealsDetails').classList.add('d-none')
+    currentView = 'category';
     await getcategorymeal(this.id)
-    console.log(this.id)
     document.querySelector('.mealcategories').classList.add('d-none')
     document.querySelector('.catmeals').classList.remove('d-none')
     $('#categmeals').on('click', '.col-md-3', async function () {
