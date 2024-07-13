@@ -120,6 +120,8 @@ $(document).on('click', '.closedetails', function () {
         document.querySelector('.areasmeals').classList.remove('d-none')
     } else if(currentView === 'ingrediants'){
         document.querySelector('.ingrediantsmeals').classList.remove('d-none')
+    } else if(currentView === 'search'){
+        document.querySelector('.search').classList.remove('d-none')
     }
 });
 async function getcategories(){
@@ -154,6 +156,7 @@ $(document).on('click','.links p.two',function(){
     document.querySelector('.areas').classList.add('d-none')
     document.querySelector('.ingrediantsmeals').classList.add('d-none')
     document.querySelector('.ingrediants').classList.add('d-none')
+    document.querySelector('.search').classList.add('d-none')
     $('nav').animate({'left':'-260px'},400)
     $('.links p').animate({'top':'300px'},400)
     document.querySelector('.navbarlinks').classList.remove('clicked')
@@ -227,6 +230,7 @@ $(document).on('click','.links p.three',function(){
     document.querySelector('.areasmeals').classList.add('d-none')
     document.querySelector('.ingrediantsmeals').classList.add('d-none')
     document.querySelector('.ingrediants').classList.add('d-none')
+    document.querySelector('.search').classList.add('d-none')
     $('nav').animate({'left':'-260px'},400)
     $('.links p').animate({'top':'300px'},400)
     document.querySelector('.navbarlinks').classList.remove('clicked')
@@ -316,6 +320,7 @@ $(document).on('click','.links p.four',function(){
     document.querySelector('.mealcategories').classList.add('d-none')
     document.querySelector('.areasmeals').classList.add('d-none')
     document.querySelector('.ingrediantsmeals').classList.add('d-none')
+    document.querySelector('.search').classList.add('d-none')
     $('nav').animate({'left':'-260px'},400)
     $('.links p').animate({'top':'300px'},400)
     document.querySelector('.navbarlinks').classList.remove('clicked')
@@ -360,3 +365,99 @@ $(document).on('click','.ingrediants .col-md-3',async function(){
         document.querySelector('.mealsDetails').classList.remove('d-none');
     });
 })
+async function getsearchmeal(id){
+        document.querySelector('.bucket').classList.add('d-none')
+        document.querySelector('.loading').classList.remove('d-none')
+            let meal = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${id}`);
+            let mealjson = await meal.json();
+            if (mealjson.meals) {
+                displaysearchmeal(mealjson.meals);
+            } else {
+                document.getElementById('searchmeals').innerHTML = `<p>No meals found.</p>`;
+            }
+        document.querySelector('.bucket').classList.remove('d-none')
+        document.querySelector('.loading').classList.add('d-none')
+}
+function displaysearchmeal(api){
+    var cartona8 = ``
+    for(var i = 0;i<api.length;i++){
+        cartona8 +=`
+                            <div class="col-md-3" id="${api[i].idMeal}">
+                                <div class="image rounded-2">
+                                    <img src="${api[i].strMealThumb}" class="w-100" alt="">
+                                    <div class="layer rounded-2 d-flex justify-content-center align-items-center">${api[i].strMeal}</div>
+                                </div>
+                            </div>
+        `
+    }
+    document.getElementById('searchmeals').innerHTML = cartona8
+}
+$(document).on('click','.links p.one',function(){
+    document.querySelector('.mealsDetails').classList.add('d-none')
+    document.querySelector('.catmeals').classList.add('d-none')
+    document.querySelector('.mealcategories').classList.add('d-none')
+    document.querySelector('.areasmeals').classList.add('d-none')
+    document.querySelector('.ingrediants').classList.add('d-none')
+    document.querySelector('.ingrediantsmeals').classList.add('d-none')
+    document.querySelector('.areas').classList.add('d-none')
+    $('nav').animate({'left':'-260px'},400)
+    $('.links p').animate({'top':'300px'},400)
+    document.querySelector('.navbarlinks').classList.remove('clicked')
+    document.querySelector('.navcloseopen').classList.add('fa-align-justify')
+    document.querySelector('.navcloseopen').classList.remove('fa-x')
+    document.querySelector('.meals').classList.add('d-none');
+    document.querySelector('.search').classList.remove('d-none');
+})
+$(document).on('input','.search .fullname',function(){
+    let mealname = document.getElementById('mealname').value
+    if(mealname != null){
+        getsearchmeal(mealname)
+    }
+})
+$(document).on('click','.search .bucket .col-md-3',async function(){
+    currentView = 'search'
+    await getdetailsMeals(this.id);
+    document.querySelector('.search').classList.add('d-none');
+    document.querySelector('.mealsDetails').classList.remove('d-none');
+})
+document.getElementById('letter').addEventListener('input', function() {
+    let value = this.value;
+    if (value.length > 1) {
+        this.value = value[0];
+    }
+    else if(value.length == 0){
+        getsearchletter(document.querySelector('.search .fullname').value[0])
+    }
+    getsearchletter(this.value)
+});
+async function getsearchletter(id){
+    document.querySelector('.bucket').classList.add('d-none')
+    document.querySelector('.loading').classList.remove('d-none')
+        try{
+            let meal = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${id}`);
+            let mealjson = await meal.json();
+            if (mealjson.meals) {
+                displaysearchletter(mealjson.meals);
+            } else {
+            document.getElementById('searchmeals').innerHTML = `<p>No meals found.</p>`;
+            }
+        } catch{
+            document.getElementById('searchmeals').innerHTML = `<p>No meals found ,try in the first input box</p>`
+        }
+    document.querySelector('.bucket').classList.remove('d-none')
+    document.querySelector('.loading').classList.add('d-none')
+}
+function displaysearchletter(api){
+var cartona9 = ``
+for(var i = 0;i<api.length;i++){
+    cartona9 +=`
+                        <div class="col-md-3" id="${api[i].idMeal}">
+                            <div class="image rounded-2">
+                                <img src="${api[i].strMealThumb}" class="w-100" alt="">
+                                <div class="layer rounded-2 d-flex justify-content-center align-items-center">${api[i].strMeal}</div>
+                            </div>
+                        </div>
+    `
+}
+document.getElementById('searchmeals').innerHTML = cartona9
+}

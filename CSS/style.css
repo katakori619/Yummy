@@ -81,6 +81,17 @@ h2 i{
 .ingrediants .col-md-3{
   cursor: pointer;
 }
+.search input{
+  background-color: transparent;
+  border-color: white;
+  color: white !important;
+}
+.search input:focus{
+  background-color: transparent;
+}
+.search input::placeholder{
+  color: rgb(145, 145, 145);
+}
 .loader {
     color: #fff;
     font-size: 10px;
