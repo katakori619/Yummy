@@ -78,7 +78,9 @@ h2 i{
   font-size: 19px;
   cursor: pointer;
 }
-
+.ingrediants .col-md-3{
+  cursor: pointer;
+}
 .loader {
     color: #fff;
     font-size: 10px;

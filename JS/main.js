@@ -118,6 +118,8 @@ $(document).on('click', '.closedetails', function () {
         document.querySelector('.catmeals').classList.remove('d-none');
     } else if(currentView ==='area'){
         document.querySelector('.areasmeals').classList.remove('d-none')
+    } else if(currentView === 'ingrediants'){
+        document.querySelector('.ingrediantsmeals').classList.remove('d-none')
     }
 });
 async function getcategories(){
@@ -150,6 +152,8 @@ $(document).on('click','.links p.two',function(){
     document.querySelector('.catmeals').classList.add('d-none')
     document.querySelector('.areasmeals').classList.add('d-none')
     document.querySelector('.areas').classList.add('d-none')
+    document.querySelector('.ingrediantsmeals').classList.add('d-none')
+    document.querySelector('.ingrediants').classList.add('d-none')
     $('nav').animate({'left':'-260px'},400)
     $('.links p').animate({'top':'300px'},400)
     document.querySelector('.navbarlinks').classList.remove('clicked')
@@ -221,6 +225,8 @@ $(document).on('click','.links p.three',function(){
     document.querySelector('.catmeals').classList.add('d-none')
     document.querySelector('.mealcategories').classList.add('d-none')
     document.querySelector('.areasmeals').classList.add('d-none')
+    document.querySelector('.ingrediantsmeals').classList.add('d-none')
+    document.querySelector('.ingrediants').classList.add('d-none')
     $('nav').animate({'left':'-260px'},400)
     $('.links p').animate({'top':'300px'},400)
     document.querySelector('.navbarlinks').classList.remove('clicked')
@@ -262,6 +268,95 @@ $(document).on('click','.areas .col-md-3',async function(){
     $('#areasmeals').on('click', '.col-md-3', async function () {
         await getdetailsMeals(this.id);
         document.querySelector('.areasmeals').classList.add('d-none');
+        document.querySelector('.mealsDetails').classList.remove('d-none');
+    });
+})
+async function getingrediants(){
+    document.querySelector('.besidenav').classList.add('d-none')
+    document.querySelector('.loading').classList.remove('d-none')
+    let cat = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?i=list')
+    let catjson = await cat.json()
+    displayingrediants(catjson.meals)
+    document.querySelector('.besidenav').classList.remove('d-none')
+    document.querySelector('.loading').classList.add('d-none')
+}
+function truncateDescription(description) {
+    const maxChars = 100;
+    if (!description) {
+        return '';
+    }
+    const firstDotIndex = description.indexOf('.');
+    if (firstDotIndex !== -1 && firstDotIndex <= maxChars) {
+        return description.substring(0, firstDotIndex + 1);
+    } else if (description.length > maxChars) {
+        return description.substring(0, maxChars) + '...';
+    } else {
+        return description;
+    }
+}
+function displayingrediants(api){
+    let cartona6 = ``
+    for(var x = 0;x<api.length;x++){
+        const truncatedDescription = truncateDescription(api[x].strDescription);
+        if(truncatedDescription){
+            cartona6 += `
+            <div class="col-md-3" id="${api[x].strIngredient}">
+                <i class="fa-solid fa-drumstick-bite fa-4x"></i>
+                <h3>${api[x].strIngredient}</h3>
+                <p>${truncatedDescription}</p>
+            </div>
+`   
+        }
+    }
+    document.getElementById('ingrediants').innerHTML = cartona6
+}
+$(document).on('click','.links p.four',function(){
+    document.querySelector('.mealsDetails').classList.add('d-none')
+    document.querySelector('.catmeals').classList.add('d-none')
+    document.querySelector('.mealcategories').classList.add('d-none')
+    document.querySelector('.areasmeals').classList.add('d-none')
+    document.querySelector('.ingrediantsmeals').classList.add('d-none')
+    $('nav').animate({'left':'-260px'},400)
+    $('.links p').animate({'top':'300px'},400)
+    document.querySelector('.navbarlinks').classList.remove('clicked')
+    document.querySelector('.navcloseopen').classList.add('fa-align-justify')
+    document.querySelector('.navcloseopen').classList.remove('fa-x')
+    document.querySelector('.meals').classList.add('d-none');
+    document.querySelector('.ingrediants').classList.remove('d-none');
+    getingrediants()
+})
+async function getingrediantmeal(mealarea){
+    document.querySelector('.besidenav').classList.add('d-none')
+    document.querySelector('.loading').classList.remove('d-none')
+    let meal = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${mealarea}`)
+    let mealjson = await meal.json()
+    displayingrediantmeal(mealjson.meals)
+    document.querySelector('.besidenav').classList.remove('d-none')
+    document.querySelector('.loading').classList.add('d-none')
+}
+function displayingrediantmeal(api){
+    var cartona7 = ``
+    for(var i = 0;i<api.length;i++){
+        cartona7 +=`
+        <div class="col-md-3" id="${api[i].idMeal}">
+                            <div class="image rounded-2">
+                                <img src="${api[i].strMealThumb}" class="w-100" alt="">
+                                <div class="layer rounded-2 d-flex justify-content-center align-items-center">${api[i].strMeal}</div>
+                            </div>
+                    </div>
+        `
+    }
+    document.getElementById('ingrediantsmeals').innerHTML = cartona7
+}
+$(document).on('click','.ingrediants .col-md-3',async function(){
+    document.querySelector('.mealsDetails').classList.add('d-none')
+    currentView = 'ingrediants';
+    await getingrediantmeal(this.id)
+    document.querySelector('.ingrediants').classList.add('d-none')
+    document.querySelector('.ingrediantsmeals').classList.remove('d-none')
+    $('#ingrediantsmeals').on('click', '.col-md-3', async function () {
+        await getdetailsMeals(this.id);
+        document.querySelector('.ingrediantsmeals').classList.add('d-none');
         document.querySelector('.mealsDetails').classList.remove('d-none');
     });
 })
