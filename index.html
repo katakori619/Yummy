@@ -41,7 +41,7 @@
                 </div>
             </nav>
             <div class="besidenav">
-                <div class="meals p-5">
+                <div class="meals d-none p-5">
                     <div class="container">
                         <div class="row g-4" id="meals">
                             
@@ -107,6 +107,43 @@
                     </div>
                     <div class="container bucket my-5">
                         <div class="row g-4" id="searchmeals">
+                        </div>
+                    </div>
+                </div>
+                <div class="contactUs w-100 vh-100">
+                    <div class="parent d-flex w-100 h-100 justify-content-center align-items-center">
+                        <div class="container w-75">
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" id="name" placeholder="Enter Your Name">
+                                    <div class="alert alert-danger name mt-2 d-none">Special characters and numbers not allowed</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="email" class="form-control" id="email" placeholder="Enter Your Email">
+                                    <div class="alert alert-danger email mt-2 d-none">Email not valid *exemple@yyy.zzz</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" id="phone" placeholder="Enter Your Phone">
+                                    <div class="alert alert-danger phone mt-2 d-none">Enter valid Phone Number</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="number" class="form-control" id="age" placeholder="Enter Your Age">
+                                    <div class="alert alert-danger age mt-2 d-none">Enter valid age</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="password" class="form-control" id="pass" placeholder="Enter Your Password">
+                                    <div class="alert alert-danger password mt-2 d-none">Enter valid password *Minimum eight characters, at least one letter and one number:*</div>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="pass" class="form-control" id="repass" placeholder="Repassword">
+                                    <div class="alert alert-danger repass mt-2 d-none">Enter valid repassword</div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="potato d-flex justify-content-center">
+                                        <button class="btn btn-outline-danger disabled">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
