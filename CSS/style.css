@@ -168,6 +168,12 @@ h2 i{
     .ingrediantsmeals .container .row{
       padding-left: 30px;
     }
+    .mealcategories .container .row{
+      padding-left: 30px;
+    }
+    .ingrediants .container .row{
+      padding-left: 30px;
+    }
 }
 @media (min-width: 768px) and (max-width: 991px){
   .meals .container .row .layer{
@@ -197,6 +203,12 @@ h2 i{
     padding-left: 70px;
   }
   .ingrediantsmeals .container .row{
+    padding-left: 70px;
+  }
+  .mealcategories .container .row{
+    padding-left: 70px;
+  }
+  .ingrediants .container .row{
     padding-left: 70px;
   }
 }
