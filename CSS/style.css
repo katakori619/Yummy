@@ -151,4 +151,74 @@ h2 i{
       3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, 
       -2em 2em 0 0, -3em 0em 0 0, -2em -2em 0 0.2em;
     }
+}
+@media (min-width: 200px){
+    .meals .container .row{
+      padding-left: 30px;
+    }
+    .mealsDetails .container .row{
+      padding-left: 30px;
+    }
+    .catmeals .container .row{
+      padding-left: 30px;
+    }
+    .areasmeals .container .row{
+      padding-left: 30px;
+    }
+    .ingrediantsmeals .container .row{
+      padding-left: 30px;
+    }
+}
+@media (min-width: 768px) and (max-width: 991px){
+  .meals .container .row .layer{
+    font-size: 20px;
   }
+  .catmeals .container .row .image .layer{
+    font-size: 20px;
+  }
+  .areasmeals .container .row .image .layer{
+    font-size: 20px;
+  }
+  .ingrediantsmeals .container .row .image .layer{
+    font-size: 20px;
+  }
+  .mealsDetails .container .row{
+    padding-left: 30px;
+  }
+}
+@media (max-width: 615px){
+  .mealsDetails .container {
+    width: 75%;
+  }
+  .catmeals .container .row{
+    padding-left: 70px;
+  }
+  .areasmeals .container .row{
+    padding-left: 70px;
+  }
+  .ingrediantsmeals .container .row{
+    padding-left: 70px;
+  }
+}
+@media (max-width: 350px){
+  .meals .container .row .image .layer{
+    font-size: 13px;
+  }
+  .catmeals .container .row .image .layer{
+    font-size: 13px;
+  }
+  .areasmeals .container .row .image .layer{
+    font-size: 13px;
+  }
+  .ingrediantsmeals .container .row .image .layer{
+    font-size: 13px;
+  }
+}
+@media (max-width: 500px){
+  .contactUs .parent .container .row{
+    padding: 30px;
+  }
+   .email{
+    width: fit-content;
+   }
+}

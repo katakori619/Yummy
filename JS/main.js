@@ -139,7 +139,7 @@ function displaycategories(api){
         cartona3 += `
         <div class="col-md-3" id="${api[x].strCategory}">
                             <div class="image rounded-2">
-                                <img src="${api[x].strCategoryThumb}" class="100" alt="">
+                                <img src="${api[x].strCategoryThumb}" class="w-100" alt="">
                                 <div class="layer rounded-2 p-2 text-center">
                                     <h3>${api[x].strCategory}</h3>
                                     <p>${api[x].strCategoryDescription}</p></div>
